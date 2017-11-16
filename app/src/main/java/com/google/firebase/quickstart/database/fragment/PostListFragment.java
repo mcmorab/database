@@ -19,9 +19,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
+import com.google.firebase.quickstart.database.MapsActivityOther;
 import com.google.firebase.quickstart.database.PostDetailActivity;
 import com.google.firebase.quickstart.database.R;
-import com.google.firebase.quickstart.database.models.Post;
+import com.google.firebase.quickstart.database.models.Locations;
 import com.google.firebase.quickstart.database.viewholder.PostViewHolder;
 
 public abstract class PostListFragment extends Fragment {
@@ -32,7 +33,7 @@ public abstract class PostListFragment extends Fragment {
     private DatabaseReference mDatabase;
     // [END define_database_reference]
 
-    private FirebaseRecyclerAdapter<Post, PostViewHolder> mAdapter;
+    private FirebaseRecyclerAdapter<Locations, PostViewHolder> mAdapter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
 
@@ -66,10 +67,10 @@ public abstract class PostListFragment extends Fragment {
 
         // Set up FirebaseRecyclerAdapter with the Query
         Query postsQuery = getQuery(mDatabase);
-        mAdapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(Post.class, R.layout.item_post,
+        mAdapter = new FirebaseRecyclerAdapter<Locations, PostViewHolder>(Locations.class, R.layout.item_post,
                 PostViewHolder.class, postsQuery) {
             @Override
-            protected void populateViewHolder(final PostViewHolder viewHolder, final Post model, final int position) {
+            protected void populateViewHolder(final PostViewHolder viewHolder, final Locations model, final int position) {
                 final DatabaseReference postRef = getRef(position);
 
                 // Set click listener for the whole post view
@@ -78,9 +79,14 @@ public abstract class PostListFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         // Launch PostDetailActivity
-                        Intent intent = new Intent(getActivity(), PostDetailActivity.class);
+
+
+
+                        Intent intent = new Intent(getActivity(), MapsActivityOther.class);
                         intent.putExtra(PostDetailActivity.EXTRA_POST_KEY, postKey);
                         startActivity(intent);
+
+
                     }
                 });
 
@@ -96,8 +102,8 @@ public abstract class PostListFragment extends Fragment {
                     @Override
                     public void onClick(View starView) {
                         // Need to write to both places the post is stored
-                        DatabaseReference globalPostRef = mDatabase.child("posts").child(postRef.getKey());
-                        DatabaseReference userPostRef = mDatabase.child("user-posts").child(model.uid).child(postRef.getKey());
+                        DatabaseReference globalPostRef = mDatabase.child("locations").child(postRef.getKey());
+                        DatabaseReference userPostRef = mDatabase.child("user-locations").child(model.uid).child(postRef.getKey());
 
                         // Run two transactions
                         onStarClicked(globalPostRef);
@@ -114,7 +120,7 @@ public abstract class PostListFragment extends Fragment {
         postRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
-                Post p = mutableData.getValue(Post.class);
+                Locations p = mutableData.getValue(Locations.class);
                 if (p == null) {
                     return Transaction.success(mutableData);
                 }

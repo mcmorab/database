@@ -27,8 +27,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.quickstart.database.fragment.MyPostsFragment;
-import com.google.firebase.quickstart.database.fragment.MyTopPostsFragment;
 import com.google.firebase.quickstart.database.fragment.RecentPostsFragment;
 
 public class  MainActivity extends BaseActivity {
@@ -47,13 +45,13 @@ public class  MainActivity extends BaseActivity {
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
                     new RecentPostsFragment(),
-                    new MyPostsFragment(),
-                    new MyTopPostsFragment(),
+                   // new MyPostsFragment(),
+                    //new MyTopPostsFragment(),
             };
             private final String[] mFragmentNames = new String[] {
                     getString(R.string.heading_recent),
-                    getString(R.string.heading_my_posts),
-                    getString(R.string.heading_my_top_posts)
+                   // getString(R.string.heading_my_posts),
+                   // getString(R.string.heading_my_top_posts)
             };
             @Override
             public Fragment getItem(int position) {
@@ -74,11 +72,11 @@ public class  MainActivity extends BaseActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        // Button launches NewPostActivity
+        // Button launches Maps current location
         findViewById(R.id.fab_new_post).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, NewPostActivity.class));
+                startActivity(new Intent(MainActivity.this, MapsActivity.class));
             }
         });
     }

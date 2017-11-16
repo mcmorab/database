@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.quickstart.database.R;
-import com.google.firebase.quickstart.database.models.Post;
+import com.google.firebase.quickstart.database.models.Locations;
 
 public class PostViewHolder extends RecyclerView.ViewHolder {
 
@@ -26,11 +26,11 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
         bodyView = (TextView) itemView.findViewById(R.id.post_body);
     }
 
-    public void bindToPost(Post post, View.OnClickListener starClickListener) {
-        titleView.setText(post.title);
-        authorView.setText(post.author);
-        numStarsView.setText(String.valueOf(post.starCount));
-        bodyView.setText(post.body);
+    public void bindToPost(Locations loc, View.OnClickListener starClickListener) {
+        titleView.setText(loc.route);
+        authorView.setText(loc.author);
+        //numStarsView.setText(String.v);
+        bodyView.setText(loc.lat+", "+loc.lon);
 
         starView.setOnClickListener(starClickListener);
     }

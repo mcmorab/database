@@ -8,7 +8,7 @@ import java.util.Map;
 
 // [START post_class]
 @IgnoreExtraProperties
-public class Post {
+public class  Post {
 
     public String uid;
     public String author;
